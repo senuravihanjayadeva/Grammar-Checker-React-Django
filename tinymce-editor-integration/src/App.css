@@ -3,6 +3,11 @@
   padding: 1px;
 }
 
+.suggestions{
+  background-color: #23b306; /* Replace #ff0000 with your desired background color */
+  padding: 1px;
+}
+
 .popup-grammar-checker{
   position: absolute;
   background-color: #fff;
@@ -15,4 +20,34 @@
   padding: 20px;
   z-index: 9999;
   overflow: auto;
+}
+
+.div-grid{
+  background-color: #ccc;
+  padding: 10px;
+  margin: 10px;
+}
+
+.grammar-correction-button{
+  margin: 10px;
+  padding: 10px;
+  width: 100px;
+  background-color: rgb(1, 130, 189);
+  color: #fff;
+  font-size: medium;
+  font-weight: 500;
+  border-radius: 5%;
+  border: none;
+}
+
+.grammar-correction-close-button{
+  margin: 10px;
+  padding: 10px;
+  width: 100px;
+  background-color: rgb(209, 65, 29);
+  color: #fff;
+  font-size: medium;
+  font-weight: 500;
+  border-radius: 5%;
+  border: none;
 }

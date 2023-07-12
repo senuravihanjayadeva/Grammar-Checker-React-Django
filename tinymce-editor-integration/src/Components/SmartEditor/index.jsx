@@ -14,27 +14,48 @@ export default function SmartEditor() {
     }
   };
 
-  function openPopup(rearrangedTextArray) {
+  function openPopup(grammarMistakes, editor, correctedText) {
     // Create the popup element
     let popup = document.createElement("div");
     popup.className = "popup-grammar-checker";
 
-    rearrangedTextArray.forEach((element) => {
-      let subPopup = document.createElement("div");
-      if (element === "End") {
-        var hrElement = document.createElement("hr");
-        // Append the hr to the popup element
-        subPopup.appendChild(hrElement);
-      } else {
+    grammarMistakes.forEach((mistakes) => {
+      let divGrid = document.createElement("div");
+      divGrid.className = "div-grid";
+      mistakes.forEach((mistake) => {
         // Create the paragraphs
         var paragraph = document.createElement("p");
-        paragraph.innerHTML = element;
+        paragraph.innerHTML = mistake;
         // Append the paragraphs to the popup element
-        subPopup.appendChild(paragraph);
-      }
-      popup.appendChild(subPopup);
+        divGrid.appendChild(paragraph);
+      });
+
+      popup.appendChild(divGrid);
     });
 
+    // Create the correction grammar button element
+    let correctionButton = document.createElement("button");
+    correctionButton.className = "grammar-correction-button";
+    correctionButton.innerHTML = "Re-correct";
+    correctionButton.onclick = function () {
+      editor.selection.setContent(correctedText);
+      popup.parentNode.removeChild(popup);
+      return false;
+    };
+
+    // Create the close button element
+    let closeButton = document.createElement("button");
+    closeButton.className = "grammar-correction-close-button";
+    closeButton.innerHTML = "Close";
+    closeButton.onclick = function () {
+      popup.parentNode.removeChild(popup);
+      return false;
+    };
+
+    // Append the re correct button element to the popup
+    popup.appendChild(correctionButton);
+    // Append the close button element to the popup
+    popup.appendChild(closeButton);
     // Append the popup element to the body
     document.body.appendChild(popup);
 
@@ -82,9 +103,12 @@ export default function SmartEditor() {
                 );
                 response.json().then((response) => {
                   console.log(response.corrected_text);
+                  let correctedText = response.corrected_text;
                   let matches = response.matches;
-                  let rearrangedTextArray = [];
+                  let grammarMistakes = [];
                   for (let match of matches) {
+                    let mistakes = [];
+
                     let incorrectText = match[4];
                     // Calculate the start and end positions for the span element
                     let start = match[3];
@@ -98,17 +122,15 @@ export default function SmartEditor() {
                       "</span>" +
                       incorrectText.substring(end);
 
-                    rearrangedTextArray.push(rearrangedText);
-                    rearrangedTextArray.push(match[8]);
-                    rearrangedTextArray.push(match[1]);
-                    rearrangedTextArray.push("End");
+                    mistakes.push(rearrangedText);
+                    mistakes.push(`Error Type : ` + match[8]);
+                    mistakes.push(`Suggestion : ` + match[1]);
+                    mistakes.push(`<span class="suggestions">` + match[2].slice(0, 2) + "</span>");
 
-
+                    grammarMistakes.push(mistakes);
                   }
 
-                  editor.selection.setContent(response.corrected_text);
-
-                  openPopup(rearrangedTextArray);
+                  openPopup(grammarMistakes, editor, correctedText);
                 });
               },
             });
