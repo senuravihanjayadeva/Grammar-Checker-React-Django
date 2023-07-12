@@ -16,18 +16,8 @@ export default function SmartEditor() {
 
   function openPopup(rearrangedTextArray) {
     // Create the popup element
-    var popup = document.createElement("div");
-    popup.style.position = "absolute";
-    popup.style.top = "50%";
-    popup.style.left = "50%";
-    popup.style.transform = "translate(-50%, -50%)";
-    popup.style.width = "500px";
-    popup.style.height = "700px";
-    popup.style.backgroundColor = "#fff";
-    popup.style.border = "1px solid #ccc";
-    popup.style.padding = "10px";
-    popup.style.zIndex = "9999";
-    popup.style.overflow = "auto"; // Enable scrolling for overflowed content
+    let popup = document.createElement("div");
+    popup.className ="popup-grammar-checker"
 
     rearrangedTextArray.forEach((element) => {
       if (element === "End") {
@@ -95,8 +85,8 @@ export default function SmartEditor() {
                   for (let match of matches) {
                     let incorrectText = match[4];
                     // Calculate the start and end positions for the span element
-                    let start = match[5];
-                    let end = match[5] + match[6];
+                    let start = match[3];
+                    let end = match[3] + match[6];
 
                     // Rearrange the incorrectText with the span element
                     let rearrangedText =
