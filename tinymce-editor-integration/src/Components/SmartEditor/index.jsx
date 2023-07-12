@@ -17,20 +17,22 @@ export default function SmartEditor() {
   function openPopup(rearrangedTextArray) {
     // Create the popup element
     let popup = document.createElement("div");
-    popup.className ="popup-grammar-checker"
+    popup.className = "popup-grammar-checker";
 
     rearrangedTextArray.forEach((element) => {
+      let subPopup = document.createElement("div");
       if (element === "End") {
         var hrElement = document.createElement("hr");
         // Append the hr to the popup element
-        popup.appendChild(hrElement);
+        subPopup.appendChild(hrElement);
       } else {
         // Create the paragraphs
         var paragraph = document.createElement("p");
         paragraph.innerHTML = element;
         // Append the paragraphs to the popup element
-        popup.appendChild(paragraph);
+        subPopup.appendChild(paragraph);
       }
+      popup.appendChild(subPopup);
     });
 
     // Append the popup element to the body
@@ -100,6 +102,8 @@ export default function SmartEditor() {
                     rearrangedTextArray.push(match[8]);
                     rearrangedTextArray.push(match[1]);
                     rearrangedTextArray.push("End");
+
+
                   }
 
                   editor.selection.setContent(response.corrected_text);
