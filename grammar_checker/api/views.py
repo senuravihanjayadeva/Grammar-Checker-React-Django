@@ -14,9 +14,14 @@ class GrammarCorrectionView(APIView):
         #text = 'A sentence with a error in the Hitchhiker’s Guide tot he Galaxy'
         matches = language_tool.check(text)
         correctText = language_tool.correct(text)
+
+        for mistakes in matches:
+            print(mistakes)
+
         # Return the corrected text in the response
         response_data = {
             'text': text,
             'corrected_text': correctText,
+            'matches': matches
         }
         return Response(response_data, status=status.HTTP_200_OK)

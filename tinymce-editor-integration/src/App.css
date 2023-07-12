@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.incorrecttext {
+  background-color: #d36b6b; /* Replace #ff0000 with your desired background color */
+  padding: 1px;
+}
