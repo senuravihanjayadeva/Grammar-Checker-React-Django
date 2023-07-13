@@ -56,7 +56,7 @@ export default function SmartEditor() {
       // Create the correction grammar button element
       let correctionButton = document.createElement("button");
       correctionButton.className = "grammar-correction-button";
-      correctionButton.innerHTML = "Re-correct";
+      correctionButton.innerHTML = "Apply Suggestions";
       correctionButton.onclick = function () {
         editor.selection.setContent(correctedText);
         popup.remove();
