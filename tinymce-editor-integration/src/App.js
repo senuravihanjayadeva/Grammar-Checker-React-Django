@@ -13,7 +13,7 @@ function App() {
   };
 
   return (
-    <>
+    <div style={{padding: "5%"}}>
       {grammerChecker ? (
         <ReactLoading
           type={"spin"}
@@ -107,7 +107,7 @@ function App() {
           },
         }}
       />
-    </>
+    </div>
   );
 }
 
